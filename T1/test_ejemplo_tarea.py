@@ -12,7 +12,7 @@ class TestParser(unittest.TestCase):
 
     # Tests para el ejercicio 1
     def test_mn(self):
-        ast1 = ModuleNode(NumberNode(5), NumberNode(2))
+        ast1 = ModuloNode(NumberNode(5), NumberNode(2))
         ast2 = parser("(% 5 2)")
         self.assertEqual(ast1,ast2)
 
@@ -27,21 +27,21 @@ class TestParser(unittest.TestCase):
         self.assertEqual(result,6)
 
     def test_to_string_mn(self):
-        ast1 = ModuleNode(AdditionNode(NumberNode(2), NumberNode(8)), SubstractNode(NumberNode(7), NumberNode(4)))
+        ast1 = ModuloNode(AdditionNode(NumberNode(2), NumberNode(8)), SubtractionNode(NumberNode(7), NumberNode(4)))
         self.assertEqual(ast1.to_string(),"(% (+ 2 8) (- 7 4))")
 
     def test_to_string_mn2(self):
-        ast1 = AdditionNode(ModuleNode(NumberNode(7),NumberNode(2)), ModuleNode(NumberNode(13), NumberNode(2)))
+        ast1 = AdditionNode(ModuloNode(NumberNode(7),NumberNode(2)), ModuloNode(NumberNode(13), NumberNode(2)))
         self.assertEqual(ast1.to_string(),"(+ (% 7 2) (% 13 2))")
 
     def test_module_counter(self):
-        visitor = ModuleOperatorCounter()
+        visitor = ModuloOperatorCounter()
         ast = parser("(% (% 30 11) (% 65 8))")
         ast.accept(visitor)
         self.assertEqual(visitor.total(), 3)
 
     def test_module_counter2(self):
-        visitor = ModuleOperatorCounter()
+        visitor = ModuloOperatorCounter()
         ast = parser("(% (+ 6 1) (% 8 5))")
         ast.accept(visitor)
         self.assertEqual(visitor.total(), 2)

@@ -105,6 +105,62 @@ class SubtractionNode(BinaryOperatorNode):
         visitor.visit_Subtract(self)
 
 
+# Operador modulo
+class ModuloNode(BinaryOperatorNode):
+
+    def __init__(self, leftNode, rightNode):
+        super(ModuloNode, self).__init__(leftNode, rightNode, "%")
+
+    def eval(self):
+        return self.leftNode.eval() % self.rightNode.eval()
+    
+    def accept(self, visitor):
+        visitor.visit_Modulo(self)
+
+
+# Operador unario -> agregar suma suma y resta resta
+
+class UnaryOperatorNode(OperatorNode):
+    def __init__(self, node, sym):
+        super().__init__(sym)
+        self.node = node
+
+    def to_string(self):
+        return "(" + self.symbol + " " + self.node.to_string() + ")"
+
+    def accept(self, visitor):
+        visitor.visit_UnaryOperator(self)
+
+    def __eq__(self, other):
+        return self.__class__ == other.__class__ and self.node == other.node and self.symbol == other.symbol
+
+
+class PlusPlusNode(UnaryOperatorNode):
+    def __init__(self, node):
+        super(PlusPlusNode, self).__init__(node, "++")
+    
+    def eval(self):
+        return self.node.eval() + 1
+
+    def accept(self, visitor):
+        visitor.visit_UnaryOperator(self)
+    
+class MinusMinusNode(UnaryOperatorNode):
+    def __init__(self, node):
+        super(MinusMinusNode, self).__init__(node, "--")
+    
+    def eval(self):
+        return self.node.eval() - 1
+    
+    def accept(self, visitor):
+        visitor.visit_UnaryOperator(self)
+    
+
+
+
+
+
+
 # Visitor
 class Visitor:
     # Los nodos compuestos deben propagar la visita a los subnodos
@@ -115,6 +171,16 @@ class Visitor:
     def visit_Subtract(self, node):
         node.leftNode.accept(self)
         node.rightNode.accept(self)
+    
+    def visit_Modulo(self, node):
+        node.leftNode.accept(self)
+        node.rightNode.accept(self)
+
+    def visit_PlusPlus(self, node):
+        node.node.accept(self)
+
+    def visit_MinusMinus(self, node):
+        node.node.accept(self)
 
     def visit_Number(self, node):
         pass
