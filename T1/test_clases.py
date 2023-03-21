@@ -65,6 +65,12 @@ class TestParser(unittest.TestCase):
         ast.accept(visitor)
         self.assertEqual(visitor.total(), 2)
 
+    def test_negative_results(self):
+        visitor = NumberCounter()
+        ast = parser("(+ (- 1 8) 2)")
+        ast.accept(visitor)
+        self.assertEqual(visitor.total(), -5)
+
 
 if __name__ == '__main__':
     unittest.main()

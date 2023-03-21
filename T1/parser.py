@@ -15,7 +15,7 @@ def isNumber(string):
 
 def isOperation(string):
     res = False
-    validOperators = {'+': 2, '-': 2}
+    validOperators = {'+': 2, '-': 2, '%': 2, '++': 1, '--': 1}
     # Primero verificamos si tiene ambos parentesis de la sintaxis
     if string[0] == '(' and string[len(string)-1] == ')':
         # Partimos por espacios la cadena sin considerar el primer y el ultimo parentesis
@@ -33,6 +33,12 @@ def operation(string):
         return AdditionNode(parser(tokens[0]), parser(tokens[1]))
     elif operator == "-":
         return SubtractionNode(parser(tokens[0]),parser(tokens[1]))
+    elif operator == "%":
+        return ModuloNode(parser(tokens[0]),parser(tokens[1]))
+    elif operator == "++":
+        return PlusPlusNode(node=parser(tokens[0]))
+    elif operator == "--":
+        return MinusMinusNode(node=parser(tokens[0]))
 
 def splitArgs(string):
     open_counter = 0
