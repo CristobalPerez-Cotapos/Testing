@@ -1,7 +1,7 @@
 import unittest
 from rules import *
 from rewriter import *
-
+from rewriter.minus_equal_rewriter import MinusEqualsRewriterCommand
 """
 Tests para las reglas y transformaciones creadas en la tarea
 IMPORTANTE: Si usted implemento la tarea en un nuevo archivo dentro del folder rules o rewriter
