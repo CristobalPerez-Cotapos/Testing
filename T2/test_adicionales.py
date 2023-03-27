@@ -88,7 +88,8 @@ class TestWarnings(unittest.TestCase):
     """ Nombre: test_minus_equal_rewriter
         Codigo a ser analizado: extra-test-code/minusEquals.py
         Descripcion: Test para evaluar transformador MinusEqualsRewriterCommand considerando los siguientes escenarios:
-        - Linea <numero-linea> : <Descripcion de codigo - caso a considerar>
+        - Linea 2 : Se existe una situación para transformar, pero lo que se resta es una operación compleja
+        - Lineas 6, 7 y 8: Existe una función con varias asignaciones de la forma a = a - b
         
         Resultado esperado: extra-test-code/expectedMinusEquals.py
     """
@@ -100,13 +101,19 @@ class TestWarnings(unittest.TestCase):
         tree = command.apply(tree)
 
         expectedCode = self.get_ast_from_file('extra-test-code/expectedMinusEquals.py')
+
+        import astor
+        print("Codigo generado\n", astor.to_source(tree))
+        print("codigo esperado\n", astor.to_source(expectedCode))
+        
         self.assertEqual(dump(tree), dump(expectedCode))
 
 
     """ Nombre: test_simplified_if
         Codigo a ser analizado: extra-test-code/simplifiedIf.py
         Descripcion: Test para evaluar SimplifiedIfRewriterCommand considerando los siguientes escenarios:
-        - Linea <numero-linea> : <Descripcion de codigo - caso a considerar>
+        - Linea 2: Concidera el caso en el que el if tiene operadores lógicos and involucrados
+        - Linea 5: Concidera el caso en el que el if tiene operadores lógicos or involucrados
         
         Resultado esperado: extra-test-code/expectedSimplifiedIf.py
     """
@@ -119,6 +126,10 @@ class TestWarnings(unittest.TestCase):
 
         expectedCode = self.get_ast_from_file('extra-test-code/expectedSimplifiedIf.py')
         
+        import astor
+        print("Codigo generado\n", astor.to_source(tree))
+        print("codigo esperado\n", astor.to_source(expectedCode))
+
         self.assertEqual(dump(tree), dump(expectedCode))
 
 if __name__ == '__main__':
