@@ -41,12 +41,15 @@ class TestWarnings(unittest.TestCase):
 
 
         # Actualice el valor de expectedWarnings de acuerdo a su caso de prueba propuesto
-        expectedWarnings = []
+        expectedWarnings = [
+        Warning('VariableLongName', 2, 'variable very_long_minus_equal has a long name'),
+        Warning('VariableLongName', 7, 'variable other_very_long_minus_equal has a long name'),
+        Warning('VariableLongName', 11, 'variable a_very_long_variable has a long name')]
 
         self.assertEqual(result, expectedWarnings)
 
     """ Nombre: test_unused_argument
-        Codigo a ser analizado: extra-test-code/unusedArgument.py
+        Codigo a ser analizado: extra-test-code/longVariableName.py
         Descripcion: Test para evaluar UnusedArgumentRule considerando los siguientes escenarios:
         - Linea <numero-linea> : <Descripcion de codigo - caso a considerar>
         
@@ -60,7 +63,12 @@ class TestWarnings(unittest.TestCase):
         result = unusedArgRule.analyze(tree)
 
         # Actualice el valor de expectedWarnings de acuerdo a su caso de prueba propuesto
-        expectedWarnings = []
+        expectedWarnings = [
+            Warning('UnusedArgument', 4, 'argument b is not used'),
+            Warning('UnusedArgument', 12, 'argument self is not used'),
+            Warning('UnusedArgument', 12, 'argument b is not used'),
+            Warning('UnusedArgument', 18, 'argument x is not used')
+        ]
 
         self.assertEqual(result, expectedWarnings)
 
@@ -80,7 +88,10 @@ class TestWarnings(unittest.TestCase):
         result = superInitRule.analyze(tree)
 
         # Actualice el valor de expectedWarnings de acuerdo a su caso de prueba propuesto
-        expectedWarnings = []
+        expectedWarnings = [
+            Warning('SuperInitNotCalled', 18, 'subclass Other does not call to super().__init__()'),
+            Warning('SuperInitNotCalled', 27, 'subclass Other2 does not call to super().__init__()')
+        ]
 
         self.assertEqual(result, expectedWarnings)
 
