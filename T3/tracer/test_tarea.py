@@ -38,6 +38,7 @@ class TestCoverageTracer(unittest.TestCase):
 
         result = self.coverage.report_executed_lines()
 
+
         expected = [
             ('remove_html_tags', 2),
             ('remove_html_tags', 3),
