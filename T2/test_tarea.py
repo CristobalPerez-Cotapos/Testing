@@ -1,7 +1,6 @@
 import unittest
 from rules import *
 from rewriter import *
-
 """
 Tests para las reglas y transformaciones creadas en la tarea
 IMPORTANTE: Si usted implemento la tarea en un nuevo archivo dentro del folder rules o rewriter
