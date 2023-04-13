@@ -57,12 +57,11 @@ class ClassInstrumentor(NodeTransformer):
         else:
             # if it is not a methd, save the function name and the line number
             self.currentFunction = node.name
-            print("Current function: " + self.currentFunction)
             
+            injectedCode = parse('ClassProfiler.currentFunction = \'' + self.currentFunction + '\'')
             transformedNode = NodeTransformer.generic_visit(self, node)
-            
-        
-                
+            transformedNode.body.insert(0, injectedCode.body[0])
+            fix_missing_locations(transformedNode) 
             
         
             return transformedNode
@@ -72,6 +71,7 @@ class ClassInstrumentor(NodeTransformer):
 class ClassProfiler(Profiler):
 
     currentClass = None
+    currentFunction = None
 
     @classmethod
     def record(cls, method_name, method_lineno, method_class):
@@ -86,6 +86,7 @@ class ClassProfiler(Profiler):
         self.classes_called = set()
         self.list_of_classes = []
         self.classes_executed_by = dict()
+        self.list_of_classes_executed_by = []
         
  
 
@@ -94,6 +95,12 @@ class ClassProfiler(Profiler):
         #append the function name, the class name and the arguments to the list, only if it is a method
         #check if the element has already been added
         self.classes_called.add((method_name, method_lineno, method_class))
+
+        if self.classes_executed_by.get(self.currentFunction) is None:
+            self.classes_executed_by[self.currentFunction] = set()
+            self.classes_executed_by[self.currentFunction].add((method_name, method_lineno, method_class))
+        else:
+            self.classes_executed_by[self.currentFunction].add((method_name, method_lineno, method_class))
 
         # self.classes_executed_by[currentFunction] = (method_name, method_lineno, method_class)
         
@@ -120,8 +127,14 @@ class ClassProfiler(Profiler):
         return self.list_of_classes
     
     def report_executed_by(self, function_name):
-        print("-- Executed by " + function_name + " --")
-        return self.classes_executed_by[function_name]
+        for (method, lineno, class1) in self.classes_executed_by[function_name]:
+            self.list_of_classes_executed_by.append((method, lineno, class1))
+        
+        self.list_of_classes_executed_by.sort(key=lambda x: x[1])
+        lista = self.list_of_classes_executed_by
+        self.list_of_classes_executed_by = []
+
+        return lista
 
 
 

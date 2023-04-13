@@ -108,8 +108,6 @@ class TestClassProfiler(unittest.TestCase):
 
         result = ClassProfiler.getInstance().report_executed_by('test_area')
 
-        print(result)
-
         expected = [('__init__', 3, 'Rectangle'), ('get_area', 7, 'Rectangle')]
         
         self.assertEqual(result, expected)
