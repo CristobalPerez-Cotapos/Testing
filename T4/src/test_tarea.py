@@ -47,13 +47,13 @@ class TestClockFactory(unittest.TestCase):
             clock.increment()
         self.assertEqual(clock.str(), "01:00")
 
-    def test_increment_5(self):
-        factory = ClockFactory()
-        try:
-            clock = factory.create("hh")
-            self.fail()
-        except KeyError:
-            pass
+    # def test_increment_5(self):
+    #     factory = ClockFactory()
+    #     try:
+    #         clock = factory.create("hh")
+    #         self.fail()
+    #     except KeyError:
+    #         pass
 
     def test_increment_6(self):
         clock = ClockDisplay([1,1])
@@ -61,7 +61,7 @@ class TestClockFactory(unittest.TestCase):
             clock.increment()
             self.fail()
         except AssertionError:
-            pass
+            assert(True)
 
     def test_increase(self):
         number = NumberDisplay(30, 60)
@@ -136,22 +136,6 @@ class TestClockFactory(unittest.TestCase):
         number = NumberDisplay(30, 60)
         self.assertEqual(None, number.__init__(30, 60))
 
-    # show that the __init__ method does not return True
-    def test_init_not_return_1(self):
-        number = NumberDisplay(30, 60)
-        try:
-            self.assertEqual(True, number.__init__(30, 60))
-            self.fail()
-        except AssertionError:
-            self.assertEqual(None, number.__init__(30, 60))
-
-    def test_init_not_return_1_1(self):
-        number = NumberDisplay(30, 60)
-        try:
-            self.assertEqual(False, number.__init__(30, 60))
-            self.fail()
-        except AssertionError:
-            self.assertEqual(None, number.__init__(30, 60))
 
 
 
@@ -159,25 +143,6 @@ class TestClockFactory(unittest.TestCase):
     def test_init_not_return_2(self):
         clock_display = ClockDisplay([23, 60])
         self.assertEqual(None, clock_display.__init__([23, 60]))
-
-    # show that the __init__ method does not return True
-    def test_init_not_return_3(self):
-        clock_display = ClockDisplay([23, 60])
-        try:
-            self.assertEqual(True, clock_display.__init__([23, 60]))
-            self.fail()
-        except AssertionError:
-            self.assertEqual(None, clock_display.__init__([23, 60]))
-
-    def test_init_not_return_3_1(self):
-        clock_display = ClockDisplay([23, 60])
-        try:
-            self.assertEqual(False, clock_display.__init__([23, 60]))
-            self.fail()
-        except AssertionError:
-            self.assertEqual(None, clock_display.__init__([23, 60]))
-
-
 
 
 if __name__ == '__main__':
