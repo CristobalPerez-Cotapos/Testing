@@ -100,6 +100,22 @@ class TestClockFactory(unittest.TestCase):
         result = number.increase()
         self.assertEqual(False, result)
 
+    def test_increase_8(self):
+        number = NumberDisplay(1, 4)
+        result = number.increase()
+        self.assertEqual(False, result)
+        
+
+    def test_increase_9(self):
+        number = NumberDisplay(1, 4)
+        result = number.increase()
+        self.assertEqual(False, result)
+
+    def test_increase_10(self):
+        number = NumberDisplay(-1, 20)
+        number.increase()
+        self.assertEqual(0, number.value)
+
 
     def test_str_1(self):
         number = NumberDisplay(10, 60)
