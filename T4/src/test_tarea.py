@@ -62,6 +62,7 @@ class TestClockFactory(unittest.TestCase):
             self.fail()
         except AssertionError:
             assert(True)
+            
 
     def test_increase(self):
         number = NumberDisplay(30, 60)
@@ -92,6 +93,27 @@ class TestClockFactory(unittest.TestCase):
         number = NumberDisplay(-10, 10)
         for i in range(20):
             number.increase()
+        self.assertEqual(0, number.value)
+
+    def test_increase_7(self):
+        number = NumberDisplay(-10, -10)
+        result = number.increase()
+        self.assertEqual(False, result)
+
+    def test_increase_8(self):
+        number = NumberDisplay(1, 4)
+        result = number.increase()
+        self.assertEqual(False, result)
+        
+
+    def test_increase_9(self):
+        number = NumberDisplay(1, 4)
+        result = number.increase()
+        self.assertEqual(False, result)
+
+    def test_increase_10(self):
+        number = NumberDisplay(-1, 20)
+        number.increase()
         self.assertEqual(0, number.value)
 
 
@@ -145,5 +167,4 @@ class TestClockFactory(unittest.TestCase):
         self.assertEqual(None, clock_display.__init__([23, 60]))
 
 
-if __name__ == '__main__':
-    unittest.main()
+unittest.main() if __name__ == '__main__' else None
